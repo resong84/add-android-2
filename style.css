@@ -1,0 +1,678 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+#app {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* 기본적으로 숨김 */
+    align-items: center;
+    justify-content: center;
+}
+
+.page.active {
+    display: flex; /* 활성화된 페이지만 보여줌 */
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Landing Page & Settings Page */
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.age-selection h2,
+.stage-selection h2,
+.setting-section h2 { /* 설정 페이지 h2 추가 */
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.age-btn,
+.stage-btn,
+.operator-btn { /* operator-btn 추가 */
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    position: relative; /* 체크마크 위치 지정을 위해 추가 */
+}
+
+.age-btn:hover,
+.stage-btn:hover,
+.operator-btn:hover { /* operator-btn hover 추가 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.age-btn:active,
+.stage-btn:active,
+.operator-btn:active { /* operator-btn active 추가 */
+    transform: translateY(0);
+}
+
+.small-text {
+    font-size: 0.8em; /* 부모 요소 폰트 크기의 0.8배 */
+}
+
+/* Settings Page Specific Styles */
+.setting-section {
+    margin-bottom: 2rem;
+}
+
+/* New style for rounded rectangular border */
+.section-box {
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 2rem;
+    background-color: #f7fafc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.operator-btn.selected { /* 선택된 연산자 버튼 스타일 */
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); /* 선택 시 다른 색상 */
+    border: 2px solid #2f855a; /* 테두리 추가 */
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.5);
+}
+
+.operator-btn.selected::after { /* 선택된 버튼에 체크마크 추가 */
+    content: '✓'; /* 유니코드 체크마크 */
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.video-link-inputs .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* New styles for inline input groups and button group */
+.input-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.input-group-inline label {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+    width: 120px; /* Adjust label width for alignment */
+    text-align: right;
+}
+
+.input-group-inline input[type="text"] {
+    flex-grow: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    max-width: calc(100% - 130px); /* Adjust input width */
+}
+
+.video-link-inputs input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.button-group-inline {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.button-group-inline .primary-btn,
+.button-group-inline .secondary-btn {
+    flex: 1; /* Allow buttons to grow and shrink */
+    max-width: 150px; /* Set a max-width for buttons */
+}
+
+
+/* Game Page */
+.game-container {
+    width: 100%;
+    max-height: 100vh; /* 뷰포트 높이 제한 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+    overflow-x: hidden; /* 가로 스크롤 방지 */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.game-header {
+    margin-bottom: 1.5rem; /* 마진 축소 */
+    flex-shrink: 0;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+#timer {
+    font-size: 1.5rem; /* 타이머 폰트 크기 */
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.game-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 0;
+    max-height: 100%; /* 컨테이너 내에서만 확장 */
+}
+
+.problem-container {
+    margin-bottom: 1.5rem; /* 마진 축소 */
+    flex-shrink: 0;
+}
+
+.problem-text {
+    font-size: 2.5rem; /* 폰트 크기 축소 */
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 1rem; /* 마진 축소 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.answer-input {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem; /* 마진 축소 */
+}
+
+#answer-input {
+    padding: 0.8rem; /* 패딩 축소 */
+    font-size: 1.3rem; /* 폰트 크기 축소 */
+    border: 3px solid #e2e8f0;
+    border-radius: 10px;
+    text-align: center;
+    width: 100px; /* 너비 축소 */
+    font-weight: 600;
+    transition: border-color 0.3s ease;
+}
+
+#answer-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+#submit-btn {
+    padding: 0.8rem 1.5rem; /* 패딩 축소 */
+    font-size: 1.1rem; /* 폰트 크기 축소 */
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.number-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem; /* 간격 축소 */
+    max-width: 280px; /* 너비 축소 */
+    margin: 0 auto 1.5rem; /* 마진 축소 */
+    flex-shrink: 0;
+}
+
+.number-row {
+    display: contents;
+}
+
+.num-btn {
+    padding: 0.8rem; /* 패딩 축소 */
+    font-size: 1.3rem; /* 폰트 크기 축소 */
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    background: #e0e0e0; /* 숫자 버튼 통일 */
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clear-btn {
+    background: #ffcdd2; /* 지우기 버튼 색상 */
+    color: #c62828;
+}
+
+.num-btn:hover {
+    background: #edf2f7;
+    transform: translateY(-2px);
+}
+
+.num-btn:active {
+    transform: translateY(0);
+}
+
+.zero-btn {
+    grid-column: span 2; /* 2칸 차지 */
+}
+
+.game-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.retry-btn, .home-btn-game {
+    padding: 0.8rem 1rem; /* 좌우 패딩 축소 */
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    white-space: nowrap; /* 글자 줄바꿈 방지 */
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+}
+
+.home-btn-game {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.retry-btn:hover, .home-btn-game:hover {
+    transform: translateY(-2px);
+}
+
+.retry-btn:hover {
+    box-shadow: 0 6px 20px rgba(237, 137, 54, 0.4);
+}
+
+.home-btn-game:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* End Page */
+.results {
+    margin-bottom: 2rem;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f7fafc;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.label {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.value {
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.video-options {
+    margin-top: 20px;
+    text-align: center;
+    display: flex; /* 버튼들을 가로로 정렬 */
+    flex-wrap: wrap; /* 공간 부족 시 줄바꿈 */
+    justify-content: center;
+    gap: 10px; /* 버튼 간 간격 */
+}
+
+.video-options p {
+    width: 100%; /* 텍스트가 전체 너비를 차지하도록 */
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.video-choice {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px; /* 기존 margin 유지 */
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.video-choice.selected {
+    background-color: #45a049;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+    border: 2px solid #2f855a; /* 선택 시 테두리 추가 */
+}
+.video-choice:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+
+#youtube-link.video-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
+#youtube-link.video-link:hover {
+    background-color: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+}
+
+.result-item {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.result-item .label {
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.result-item .value {
+    font-weight: normal;
+    color: #333;
+}
+
+.video-title {
+    font-weight: 600;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 0.5rem;
+    display: inline-block;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.secondary-btn {
+    background: #e2e8f0;
+    color: #4a5568;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+    transform: translateY(-2px);
+}
+.primary-btn:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+.secondary-btn:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.youtube-links {
+    margin-bottom: 2rem; /* 버튼 사이에 여백 추가 */
+}
+
+.button-group-end {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.red-text {
+    color: red;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .container,
+    .game-container {
+        padding: 12px; /* 패딩 추가 축소 */
+    }
+    
+    .title {
+        font-size: 1.8rem; /* 폰트 축소 */
+    }
+    
+    .problem-text {
+        font-size: 2rem; /* 폰트 축소 */
+    }
+    
+    .number-pad {
+        gap: 0.5rem; /* 간격 축소 */
+        max-width: 260px; /* 너비 축소 */
+    }
+    
+    .num-btn {
+        padding: 0.6rem; /* 패딩 축소 */
+        font-size: 1.2rem; /* 폰트 축소 */
+    }
+    
+    .button-group {
+        gap: 0.6rem; /* 간격 축소 */
+    }
+    
+    .age-btn,
+    .stage-btn,
+    .operator-btn { /* operator-btn 추가 */
+        padding: 0.6rem 1.2rem; /* 패딩 축소 */
+        font-size: 1rem; /* 폰트 축소 */
+    }
+    
+    .game-content {
+        gap: 0.8rem; /* 간격 축소 */
+    }
+    
+    .problem-container {
+        margin-bottom: 0.8rem; /* 마진 축소 */
+    }
+    
+    .answer-input {
+        margin-bottom: 0.8rem; /* 마진 축소 */
+    }
+    
+    .number-pad {
+        margin-bottom: 0.8rem; /* 마진 축소 */
+    }
+
+    .video-link-inputs .input-group {
+        margin-bottom: 0.8rem;
+    }
+
+    .input-group-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .input-group-inline label {
+        width: auto;
+        text-align: left;
+    }
+
+    .input-group-inline input[type="text"] {
+        max-width: 100%;
+    }
+
+    .button-group-inline {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .button-group-inline .primary-btn,
+    .button-group-inline .secondary-btn {
+        max-width: 100%;
+    }
+}
+
+@media (max-height: 600px) {
+    .game-container {
+        padding: 8px; /* 패딩 추가 축소 */
+        max-height: 100vh; /* 높이 명시적 제한 */
+        overflow-y: auto; /* 스크롤 보장 */
+    }
+    
+    .game-header {
+        margin-bottom: 0.8rem; /* 마진 축소 */
+    }
+    
+    .problem-text {
+        font-size: 1.8rem; /* 폰트 축소 */
+        margin-bottom: 0.8rem; /* 마진 축소 */
+    }
+    
+    .number-pad {
+        gap: 0.4rem; /* 간격 축소 */
+        max-width: 240px; /* 너비 축소 */
+    }
+    
+    .num-btn {
+        padding: 0.5rem; /* 패딩 축소 */
+        font-size: 1.1rem; /* 폰트 축소 */
+    }
+}
+
+/* 정답/오답 애니메이션 */
+.correct {
+    animation: correctAnswer 0.5s ease;
+}
+
+.incorrect {
+    animation: incorrectAnswer 0.5s ease;
+}
+
+@keyframes correctAnswer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); background: #48bb78; }
+    100% { transform: scale(1); }
+}
+
+@keyframes incorrectAnswer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); background: #e53e3e; }
+    100% { transform: scale(1); }
+}
+
+/*# sourceMappingURL=style.css.map */
