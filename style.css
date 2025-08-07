@@ -344,7 +344,8 @@ body {
     grid-column: span 2; /* 2칸 차지 */
 }
 
-.game-buttons {
+/* ▼▼▼ 이 부분이 수정/추가된 부분입니다 ▼▼▼ */
+.game-action-buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -674,5 +675,3 @@ body {
     50% { transform: scale(1.1); background: #e53e3e; }
     100% { transform: scale(1); }
 }
-
-/*# sourceMappingURL=style.css.map */
