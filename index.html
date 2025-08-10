@@ -43,10 +43,8 @@
                 <div class="setting-section section-box">
                     <h2>연산 종류 선택</h2>
                     <div class="button-group operator-group">
-                        <button class="operator-btn" data-operator="+">덧셈</mutton>
+                        <button class="operator-btn" data-operator="+">덧셈</button>
                         <button class="operator-btn" data-operator="-">뺄셈</button>
-                        <button class="operator-btn" data-operator="*">곱셈</button>
-                        <button class="operator-btn" data-operator="/">나눗셈</button>
                     </div>
                     <p id="operator-change-warning" class="small-text red-text" style="display: none; margin-top: 10px;">연산 종류 변경 시 현재 적립 시간이 초기화됩니다.</p>
                 </div>
@@ -93,7 +91,7 @@
                     <div class="problem-container">
                         <div id="problem-text" class="problem-text"></div>
                         <div class="answer-input">
-                            <input type="text" id="answer-input" maxlength="3" autocomplete="off" readonly>
+                            <input type="text" id="answer-input" maxlength="3" autocomplete="off">
                             <button id="submit-btn">확인</button>
                         </div>
                     </div>

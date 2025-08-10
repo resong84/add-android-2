@@ -72,6 +72,13 @@ class MathGame {
         this.youtubeLink = document.getElementById('youtube-link');
         this.playAgainBtn = document.getElementById('play-again-btn');
         this.homeBtn = document.getElementById('home-btn');
+
+        // ▼▼▼ [수정된 부분] 기기 확인 후 키보드 설정 ▼▼▼
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        if (isAndroid) {
+            this.answerInput.readOnly = true; // 안드로이드 기기일 경우, 가상 키보드가 나타나지 않도록 설정
+        }
+        // ▲▲▲ [수정된 부분] 기기 확인 후 키보드 설정 ▲▲▲
     }
 
     bindEvents() {
@@ -319,42 +326,6 @@ class MathGame {
             case '-':
                 if (num1 < num2) [num1, num2] = [num2, num1];
                 answer = num1 - num2;
-                break;
-            case '*':
-                answer = num1 * num2;
-                break;
-            case '/':
-                let maxNum1;
-                if (age === 5) {
-                    if (stage === 1) { maxNum1 = 5; } else if (stage === 2) { maxNum1 = 10; }
-                    else if (stage === 3) { maxNum1 = 10; } else if (stage === 4) { maxNum1 = 15; }
-                    else if (stage === 5) { maxNum1 = 20; }
-                } else if (age === 6) {
-                    if (stage === 1) { maxNum1 = 15; } else if (stage === 2) { maxNum1 = 20; }
-                    else if (stage === 3) { maxNum1 = 30; } else if (stage === 4) { maxNum1 = 36; }
-                    else if (stage === 5) { maxNum1 = 36; }
-                } else if (age === 7) {
-                    if (stage === 1) { maxNum1 = 36; } else if (stage === 2) { maxNum1 = 36; }
-                    else if (stage === 3) { maxNum1 = 46; } else if (stage === 4) { maxNum1 = 56; }
-                    else if (stage === 5) { maxNum1 = 76; }
-                } else if (age === 8) {
-                    if (stage === 1) { maxNum1 = 56; } else if (stage === 2) { maxNum1 = 76; }
-                    else if (stage === 3) { maxNum1 = 86; } else if (stage === 4) { maxNum1 = 100; }
-                    else if (stage === 5) { maxNum1 = 100; }
-                }
-
-                num2 = Math.floor(Math.random() * maxNum1) + 1;
-                if (num2 === 0) num2 = 1;
-
-                const maxMultiple = Math.floor(maxNum1 / num2);
-                if (maxMultiple === 0) {
-                    num1 = num2;
-                    answer = 1;
-                } else {
-                    const randomMultiple = Math.floor(Math.random() * maxMultiple) + 1;
-                    num1 = num2 * randomMultiple;
-                    answer = randomMultiple;
-                }
                 break;
             default:
                 operator = '+';
