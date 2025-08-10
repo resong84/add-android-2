@@ -73,12 +73,13 @@ class MathGame {
         this.playAgainBtn = document.getElementById('play-again-btn');
         this.homeBtn = document.getElementById('home-btn');
 
-        // ▼▼▼ [수정된 부분] 기기 확인 후 키보드 설정 ▼▼▼
+        // ▼▼▼ [수정된 부분] 기기 확인 후 키보드 및 스타일 클래스 설정 ▼▼▼
         const isAndroid = /Android/i.test(navigator.userAgent);
         if (isAndroid) {
-            this.answerInput.readOnly = true; // 안드로이드 기기일 경우, 가상 키보드가 나타나지 않도록 설정
+            this.answerInput.readOnly = true;
+            document.getElementById('app').classList.add('android');
         }
-        // ▲▲▲ [수정된 부분] 기기 확인 후 키보드 설정 ▲▲▲
+        // ▲▲▲ [수정된 부분] 기기 확인 후 키보드 및 스타일 클래스 설정 ▲▲▲
     }
 
     bindEvents() {
