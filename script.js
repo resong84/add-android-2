@@ -128,6 +128,18 @@ class MathGame {
         // Game page events
         this.submitBtn.addEventListener('click', () => this.checkAnswer());
         
+        // ▼▼▼ [수정된 부분] 입력 값 실시간 업데이트 ▼▼▼
+        this.answerInput.addEventListener('input', () => {
+            // 데스크탑에서 키보드 입력 시, 입력 값을 바로 반영
+            if (!this.answerInput.readOnly) {
+                // 'undefined' 방지 로직 (필요시 추가)
+                if (this.answerInput.value === 'undefined') {
+                    this.answerInput.value = '';
+                }
+            }
+        });
+        // ▲▲▲ [수정된 부분] 입력 값 실시간 업데이트 ▲▲▲
+
         this.answerInput.addEventListener('keydown', (e) => {
             const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Enter'];
             const isNumber = e.key >= '0' && e.key <= '9';
@@ -152,7 +164,9 @@ class MathGame {
             btn.addEventListener('click', (e) => {
                 const target = e.currentTarget;
                 if (target.classList.contains('clear-btn')) {
+                    // ▼▼▼ [수정된 부분] 지우기 버튼 텍스트 변경 ▼▼▼
                     this.answerInput.value = '';
+                    // ▲▲▲ [수정된 부분] 지우기 버튼 텍스트 변경 ▲▲▲
                 } else {
                     const num = target.dataset.num;
                     if (this.answerInput.value.length < 3) {
