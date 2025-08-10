@@ -468,7 +468,8 @@ class MathGame {
             const elapsedTime = Date.now() - this.startTime;
             const minutes = Math.floor(elapsedTime / 60000).toString().padStart(2, '0');
             const seconds = Math.floor((elapsedTime % 60000) / 1000).toString().padStart(2, '0');
-            this.timerElement.textContent = `${minutes}:${seconds}`;
+            const centiseconds = Math.floor((elapsedTime % 1000) / 10).toString().padStart(2, '0');
+            this.timerElement.textContent = `${minutes}:${seconds}:${centiseconds}`;
         }, 100);
     }
 
