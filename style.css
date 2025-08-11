@@ -699,3 +699,44 @@ body {
     50% { transform: scale(1.1); background: #e53e3e; }
     100% { transform: scale(1); }
 }
+
+/* --- START: Android 기기 전용 스타일 --- */
+
+/* 설정 페이지: 연산 종류 버튼을 한 줄에 표시 */
+.android .operator-group {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.android .operator-btn {
+    flex: 1; /* 버튼이 공간을 균등하게 차지하도록 설정 */
+    max-width: 150px; /* 버튼의 최대 너비 설정 */
+}
+
+/* 설정 페이지: 링크 영상 레이블과 입력창을 한 줄에 표시 */
+/* 화면이 480px 이하일 때 세로로 바뀌는 미디어 쿼리 스타일을 덮어씁니다. */
+.android .input-group-inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.android .input-group-inline label {
+    width: 120px; /* 레이블 너비 고정 */
+    text-align: right;
+}
+
+.android .input-group-inline input[type="text"] {
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    max-width: calc(100% - 130px); /* 레이블 너비와 간격을 제외한 최대 너비 설정 */
+}
+
+/* 게임 플레이 페이지: 키패드 사이즈를 반응형으로 조절 */
+.android .number-pad {
+    width: 90%; /* 화면 너비의 90%를 차지하도록 설정 */
+    max-width: 280px; /* 키패드가 너무 커지지 않도록 최대 너비 제한 */
+    margin: 0 auto 1.5rem; /* 위아래 마진 및 좌우 중앙 정렬 유지 */
+}
+
+/* --- END: Android 기기 전용 스타일 --- */
