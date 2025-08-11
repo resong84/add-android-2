@@ -31,8 +31,10 @@ body {
     width: 100%;
     height: 100%;
     display: none; /* 기본적으로 숨김 */
-    align-items: center;
+    align-items: flex-start; /* ▼▼▼ [수정] flex 시작점으로 정렬하여 위쪽을 고정 ▼▼▼ */
     justify-content: center;
+    padding-top: 5rem; /* ▼▼▼ [수정] 위쪽 여백을 추가하여 제목 위치를 일관되게 조정 ▼▼▼ */
+    overflow-y: auto; /* ▼▼▼ [추가] 내용이 길어질 경우 스크롤되도록 설정 ▼▼▼ */
 }
 
 .page.active {
@@ -62,6 +64,15 @@ body {
     margin-bottom: 1.5rem;
 }
 
+.age-selection h2,
+.stage-selection h2 {
+    min-height: 2.5em; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .button-group {
     display: flex;
     flex-direction: column;
@@ -76,7 +87,7 @@ body {
     padding: 1rem 2rem;
     font-size: 1.2rem;
     font-weight: 600;
-    border: none;
+    border: 2px solid transparent; 
     border-radius: 15px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -86,12 +97,14 @@ body {
     position: relative; /* 체크마크 위치 지정을 위해 추가 */
 }
 
-/* ▼▼▼ [수정된 부분] 나이/단계 선택 버튼 높이 통일 ▼▼▼ */
-.common-btn-height {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+.age-btn,
+.stage-btn {
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-/* ▲▲▲ [수정된 부분] 나이/단계 선택 버튼 높이 통일 ▲▲▲ */
 
 .age-btn:hover,
 .stage-btn:hover,
@@ -115,7 +128,6 @@ body {
     margin-bottom: 2rem;
 }
 
-/* New style for rounded rectangular border */
 .section-box {
     border: 2px solid #e2e8f0;
     border-radius: 15px;
@@ -125,9 +137,15 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
+#operator-change-warning {
+    margin-top: 10px;
+    visibility: hidden;
+    min-height: 1.2em;
+}
+
 .operator-btn.selected { /* 선택된 연산자 버튼 스타일 */
     background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); /* 선택 시 다른 색상 */
-    border: 2px solid #2f855a; /* 테두리 추가 */
+    border-color: #2f855a; 
     box-shadow: 0 4px 15px rgba(72, 187, 120, 0.5);
 }
 
@@ -149,7 +167,6 @@ body {
     margin-bottom: 1rem;
 }
 
-/* New styles for inline input groups and button group */
 .input-group-inline {
     display: flex;
     align-items: center;
@@ -333,12 +350,6 @@ body {
     transition: all 0.1s ease-out;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
-.android .num-btn {
-    padding: 1.04rem;
-    font-size: 1.69rem;
-}
-
 
 .clear-btn {
     background: #ffcdd2; /* 지우기 버튼 색상 */

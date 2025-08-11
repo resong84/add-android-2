@@ -73,13 +73,11 @@ class MathGame {
         this.playAgainBtn = document.getElementById('play-again-btn');
         this.homeBtn = document.getElementById('home-btn');
 
-        // ▼▼▼ [수정된 부분] 기기 확인 후 키보드 및 스타일 클래스 설정 ▼▼▼
         const isAndroid = /Android/i.test(navigator.userAgent);
         if (isAndroid) {
             this.answerInput.readOnly = true;
             document.getElementById('app').classList.add('android');
         }
-        // ▲▲▲ [수정된 부분] 기기 확인 후 키보드 및 스타일 클래스 설정 ▲▲▲
     }
 
     bindEvents() {
@@ -105,14 +103,15 @@ class MathGame {
         this.operatorButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const newStagedOperator = e.currentTarget.dataset.operator;
-                // 현재 활성화된 연산자와 설정 페이지에서 선택된 연산자가 다를 경우 경고 메시지 표시 및 타이머 풀 초기화
+                // ▼▼▼ [수정된 부분] display 대신 visibility 속성 제어 ▼▼▼
                 if (this.currentOperator !== newStagedOperator) {
-                    this.operatorChangeWarning.style.display = 'block';
+                    this.operatorChangeWarning.style.visibility = 'visible';
                     this.timerPool = 0; // 타이머 풀 초기화
                     this.updateTimerPoolUI(); // UI 업데이트
                 } else {
-                    this.operatorChangeWarning.style.display = 'none';
+                    this.operatorChangeWarning.style.visibility = 'hidden';
                 }
+                // ▲▲▲ [수정된 부분] display 대신 visibility 속성 제어 ▲▲▲
                 this.stagedOperator = newStagedOperator; // 임시 값으로 저장
                 this.updateOperatorButtonSelection(); // 선택된 연산자 버튼 시각화 (임시 값 기준)
             });
@@ -128,18 +127,6 @@ class MathGame {
         // Game page events
         this.submitBtn.addEventListener('click', () => this.checkAnswer());
         
-        // ▼▼▼ [수정된 부분] 입력 값 실시간 업데이트 ▼▼▼
-        this.answerInput.addEventListener('input', () => {
-            // 데스크탑에서 키보드 입력 시, 입력 값을 바로 반영
-            if (!this.answerInput.readOnly) {
-                // 'undefined' 방지 로직 (필요시 추가)
-                if (this.answerInput.value === 'undefined') {
-                    this.answerInput.value = '';
-                }
-            }
-        });
-        // ▲▲▲ [수정된 부분] 입력 값 실시간 업데이트 ▲▲▲
-
         this.answerInput.addEventListener('keydown', (e) => {
             const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Enter'];
             const isNumber = e.key >= '0' && e.key <= '9';
@@ -164,10 +151,8 @@ class MathGame {
             btn.addEventListener('click', (e) => {
                 const target = e.currentTarget;
                 if (target.classList.contains('clear-btn')) {
-                    // ▼▼▼ [수정된 부분] 지우기 버튼 텍스트 변경 ▼▼▼
-                    this.answerInput.value = '';
-                    // ▲▲▲ [수정된 부분] 지우기 버튼 텍스트 변경 ▲▲▲
-                } else {
+                    this.answerInput.value = this.answerInput.value.slice(0, -1);
+                } else if (target.dataset.num !== undefined) { // ▼▼▼ [수정된 부분] 'undefined' 버그 수정 ▼▼▼
                     const num = target.dataset.num;
                     if (this.answerInput.value.length < 3) {
                         this.answerInput.value += num;
@@ -217,7 +202,7 @@ class MathGame {
             this.videoInput2.value = this.customVideoChoices[1] || '';
             this.videoInput3.value = this.customVideoChoices[2] || '';
             this.updateOperatorButtonSelection(); // 임시 값 기준으로 버튼 선택 표시
-            this.operatorChangeWarning.style.display = 'none'; // 설정 페이지 진입 시 경고 메시지 숨김
+            this.operatorChangeWarning.style.visibility = 'hidden'; // ▼▼▼ [수정된 부분] 페이지 진입 시 경고 메시지 숨김 ▼▼▼
         }
         if (pageToShow === this.endPage) {
             this.updateVideoChoiceButtons();

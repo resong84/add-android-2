@@ -15,18 +15,18 @@
                 <div class="age-selection">
                     <h2>🖐️ 나이를 선택하세요</h2>
                     <div class="button-group">
-                        <button class="age-btn common-btn-height" data-age="5">만 4세 <span class="small-text">(48개월~)</span></button>
-                        <button class="age-btn common-btn-height" data-age="6">만 5세 <span class="small-text">(60개월~)</span></button>
-                        <button class="age-btn common-btn-height" data-age="7">만 6세 <span class="small-text">(72개월~)</span></button>
-                        <button class="age-btn common-btn-height" data-age="8">만 7세 <span class="small-text">(90개월~)</span></button>
+                        <button class="age-btn" data-age="5">만 4세 <span class="small-text">(48개월~)</span></button>
+                        <button class="age-btn" data-age="6">만 5세 <span class="small-text">(60개월~)</span></button>
+                        <button class="age-btn" data-age="7">만 6세 <span class="small-text">(72개월~)</span></button>
+                        <button class="age-btn" data-age="8">만 7세 <span class="small-text">(90개월~)</span></button>
                     </div>
                 </div>
                 <div class="stage-selection" style="display: none;">
                     <h2>🪜 단계를 선택하세요</h2>
                     <div class="button-group">
-                        <button class="stage-btn common-btn-height" data-stage="3">3단계 <span class="small-text">(문제 당 10점)</span></button>
-                        <button class="stage-btn common-btn-height" data-stage="4">4단계 <span class="small-text">(문제 당 15점)</span></button>
-                        <button class="stage-btn common-btn-height" data-stage="5">5단계 <span class="small-text">(문제 당 20점)</span></button>
+                        <button class="stage-btn" data-stage="3">3단계 <span class="small-text">(문제 당 10점)</span></button>
+                        <button class="stage-btn" data-stage="4">4단계 <span class="small-text">(문제 당 15점)</span></button>
+                        <button class="stage-btn" data-stage="5">5단계 <span class="small-text">(문제 당 20점)</span></button>
                         <button id="prev-stage-btn" class="secondary-btn">이전으로</button>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <button class="operator-btn" data-operator="+">덧셈</button>
                         <button class="operator-btn" data-operator="-">뺄셈</button>
                     </div>
-                    <p id="operator-change-warning" class="small-text red-text" style="display: none; margin-top: 10px; min-height: 1.2em;">연산 종류 변경 시 현재 적립 시간이 초기화됩니다.</p>
+                    <p id="operator-change-warning" class="small-text red-text">연산 종류 변경 시 현재 적립 시간이 초기화됩니다.</p>
                 </div>
 
                 <!-- Video Link Editing Section -->
@@ -112,7 +112,7 @@
                             <button class="num-btn" data-num="9">9</button>
                         </div>
                         <div class="number-row">
-                            <button class="num-btn clear-btn">←</button>
+                            <button class="num-btn clear-btn">Del</button>
                             <button class="num-btn" data-num="0">0</button>
                             <button id="submit-btn" class="num-btn">확인</button>
                         </div>
