@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 게임</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div id="landing-page" class="page active">
+            <div class="container">
+                <h1 class="title">수학 게임</h1>
+                <div class="age-selection">
+                    <h2>🖐️ 나이를 선택하세요</h2>
+                    <div class="button-group">
+                        <button class="age-btn" data-age="5">만 4세 <span class="small-text">(48개월~)</span></button>
+                        <button class="age-btn" data-age="6">만 5세 <span class="small-text">(60개월~)</span></button>
+                        <button class="age-btn" data-age="7">만 6세 <span class="small-text">(72개월~)</span></button>
+                        <button class="age-btn" data-age="8">만 7세 <span class="small-text">(90개월~)</span></button>
+                    </div>
+                </div>
+                <div class="stage-selection" style="display: none;">
+                    <h2>🪜 단계를 선택하세요</h2>
+                    <div class="button-group">
+                        <button class="stage-btn" data-stage="3">3단계 <span class="small-text">(문제 당 10점)</span></button>
+                        <button class="stage-btn" data-stage="4">4단계 <span class="small-text">(문제 당 15점)</span></button>
+                        <button class="stage-btn" data-stage="5">5단계 <span class="small-text">(문제 당 20점)</span></button>
+                        <button id="prev-stage-btn" class="secondary-btn">이전으로</button>
+                    </div>
+                </div>
+                <div class="button-group" style="margin-top: 2rem;">
+                    <button id="settings-btn" class="secondary-btn">설정</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings-page" class="page">
+            <div class="container">
+                <h1 class="title">게임 설정</h1>
+                <!-- Operator Selection Section -->
+                <div class="setting-section section-box">
+                    <h2>연산 종류 선택</h2>
+                    <div class="button-group operator-group">
+                        <button class="operator-btn" data-operator="+">덧셈</button>
+                        <button class="operator-btn" data-operator="-">뺄셈</button>
+                    </div>
+                    <p id="operator-change-warning" class="small-text red-text">연산 종류 변경 시 현재 적립 시간이 초기화됩니다.</p>
+                </div>
+
+                <!-- Video Link Editing Section -->
+                <div class="setting-section section-box" style="margin-top: 2rem;">
+                    <h2>링크 영상 수정</h2>
+                    <div class="video-link-inputs">
+                        <div class="input-group-inline">
+                            <label for="video-input-1">링크 영상 1:</label>
+                            <input type="text" id="video-input-1" placeholder="예: 뽀로로">
+                        </div>
+                        <div class="input-group-inline">
+                            <label for="video-input-2">링크 영상 2:</label>
+                            <input type="text" id="video-input-2" placeholder="예: 넘버블럭스">
+                        </div>
+                        <div class="input-group-inline">
+                            <label for="video-input-3">링크 영상 3:</label>
+                            <input type="text" id="video-input-3" placeholder="예: 슈퍼심플송">
+                        </div>
+                        <div class="button-group-inline">
+                            <button id="save-video-settings-btn" class="primary-btn">저장</button>
+                            <button id="back-to-landing-from-settings-btn" class="secondary-btn">이전으로</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-page" class="page">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <span id="current-stage">1단계</span>
+                        <span id="timer">00:00:00</span>
+                        <span id="score">점수: 0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="game-content">
+                    <div class="problem-container">
+                        <div id="problem-text" class="problem-text"></div>
+                        <div class="answer-input">
+                            <input type="text" id="answer-input" maxlength="3" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="number-pad">
+                        <div class="number-row">
+                            <button class="num-btn" data-num="1">1</button>
+                            <button class="num-btn" data-num="2">2</button>
+                            <button class="num-btn" data-num="3">3</button>
+                        </div>
+                        <div class="number-row">
+                            <button class="num-btn" data-num="4">4</button>
+                            <button class="num-btn" data-num="5">5</button>
+                            <button class="num-btn" data-num="6">6</button>
+                        </div>
+                        <div class="number-row">
+                            <button class="num-btn" data-num="7">7</button>
+                            <button class="num-btn" data-num="8">8</button>
+                            <button class="num-btn" data-num="9">9</button>
+                        </div>
+                        <div class="number-row">
+                            <button class="num-btn clear-btn">Del</button>
+                            <button class="num-btn" data-num="0">0</button>
+                            <button id="submit-btn" class="num-btn">확인</button>
+                        </div>
+                    </div>
+
+                    <!-- New container for game action buttons -->
+                    <div class="game-action-buttons">
+                        <button id="retry-btn" class="retry-btn">다시하기</button>
+                        <button id="home-btn-game" class="home-btn-game">처음으로</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="end-page" class="page">
+            <div class="container">
+                <h1 class="title">결과</h1>
+                <div class="results">
+                    <div class="result-item">
+                        <span class="label">최종 점수:</span>
+                        <span id="final-score" class="value">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">정답률:</span>
+                        <span id="accuracy" class="value">0%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">소요 시간:</span>
+                        <span id="time-taken" class="value">0초</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">현재 적립 시간:</span>
+                        <span id="timer-pool-display" class="value">0분</span>
+                    </div>
+                    <p class="small-text red-text">스스로의 자제력을 키울 수 있게 별도의 알람 기능이 없습니다.<br>시간을 기록하시고 적절한 방법으로 지도해 주세요.</p>
+                    <p id="timer-full-message" class="red-text" style="display: none;">더이상 시간을 적립할 수 없습니다</p>
+                </div>
+
+                <div class="video-options">
+                    <p>보고싶은 영상 선택:</p>
+                </div>
+
+                <div id="end-video-link" class="youtube-links">
+                    <a id="youtube-link" href="#" target="_blank" class="video-link">
+                        <span class="video-icon">▶</span>
+                        <span class="video-title">영상 보러 가기</span>
+                    </a>
+                </div>
+
+                <div class="button-group-end">
+                    <button id="play-again-btn" class="primary-btn">다시하기</button>
+                    <button id="home-btn" class="primary-btn">처음으로</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
